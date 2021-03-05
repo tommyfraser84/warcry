@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22eb6e454af85e744915957d4baa5402, type: 3}
+  m_Name: Footman
+  m_EditorClassIdentifier: 
+  Name: Footman
+  Model: {fileID: 0}
+  HP: 60
+  DamageMin: 1
+  DamageNormal: 9
+  Range: 0
+  Armour: 2
+  MoveSpeed: 7
+  Selected: 0
+  CanAttack: 1
+  status: 0
+  BuildTime: 600
+  BuildGold: 400
+  BuildLumber: 0
