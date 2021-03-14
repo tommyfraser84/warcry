@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineSelector : MonoBehaviour
+public class InputManager : MonoBehaviour
 {
     //allow component to be attached to gameobject in editor
     [SerializeField] LineRenderer rend;
@@ -11,6 +11,8 @@ public class LineSelector : MonoBehaviour
 
     //setup v3 array to store initial points
     Vector3[] points;
+
+    Transform selectedUnit;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +42,8 @@ public class LineSelector : MonoBehaviour
 
         points[0] = transform.position;
 
+   
+
         if (Physics.Raycast(ray,out hit))
         {
            // Debug.Log("hit!");
@@ -55,8 +59,9 @@ public class LineSelector : MonoBehaviour
                     //Debug.Log("unit layer hit!");
                     rend.startColor = Color.green;
                     rend.endColor = Color.green;
-                    if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger)){
+                    if (OVRInput.GetDown(OVRInput.Button.One)){
                         Debug.Log("Trigger down!");
+                        selectedUnit = hit.transform;
                         hit.transform.gameObject.GetComponent<BasicUnitActions>().Selected(true);
                     } else
                     {
@@ -67,8 +72,12 @@ public class LineSelector : MonoBehaviour
                    // Debug.Log("unknown layer hit!");
                     rend.startColor = Color.red;
                     rend.endColor = Color.red;
-                   if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger)){
+                   if (OVRInput.GetDown(OVRInput.Button.One)){
                         Debug.Log("Trigger down!");
+                        if (selectedUnit != null)
+                        {
+                            selectedUnit.gameObject.GetComponent<BasicUnitActions>().Selected(false);
+                        }
                         //hit.transform.gameObject.GetComponent<BasicUnitActions>().Selected(false);
                     }
                     break;
