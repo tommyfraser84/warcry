@@ -1,109 +1,145 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RTS1.Units;
 
-public class InputManager : MonoBehaviour
+namespace RTS1.Input
 {
-    
 
-    public OVRInput.Button selectDeselectButton, moveButton;
-    
-    //allow component to be attached to gameobject in editor
-    LineRenderer rend;
-
-    //public LayerMask layerMask;
-
-    //setup v3 array to store initial points
-    Vector3[] points;
-
-    Transform selectedUnit;
-
-    public Transform selectingHand;
-
-    // Start is called before the first frame update
-    void Start()
+    public class InputManager : MonoBehaviour
     {
 
-        rend = selectingHand.GetComponent<LineRenderer>();
-        rend.startColor = Color.red;
-        rend.endColor = Color.red;
-        points = new Vector3[2];
+        //set variables to 
+        public OVRInput.Button selectDeselectButton, moveButton;
 
-    }
+        //allow component to be attached to gameobject in editor
+        LineRenderer rend;
 
-    // Update is called once per frame
-    void Update()
-    {
-        AlignLineRenderer(rend);
-       // Debug.Log(OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger));
-    }
+        //setup v3 array to store initial points
+        Vector3[] points;
 
-    public void AlignLineRenderer(LineRenderer rend)
-    {
+        //List of units selected
+        private List<Transform> selectedUnits = new List<Transform>();
 
+        //The transform of the hand/object used to draw a linerender from
+        public Transform selectingHand;
 
-        Ray ray;
-        ray = new Ray(selectingHand.transform.position, selectingHand.transform.forward);
-        RaycastHit hit;
+        public Color lineColour1, lineColour2;
 
-        points[0] = selectingHand.transform.position;
-
-   
-
-        if (Physics.Raycast(ray,out hit))
+        void Start()
         {
-           // Debug.Log("hit!");
-            points[1] = hit.point;
+            //set variable tolinerenderer component on the selectingHand object
+            rend = selectingHand.GetComponent<LineRenderer>();
 
-            LayerMask layerHit = hit.transform.gameObject.layer;
+            //set linecolor to start
+            rend.startColor = lineColour1;
+            rend.endColor = lineColour1;
 
-          
+            //
+            points = new Vector3[2];
+        }
 
-            switch (layerHit.value) { 
-                //units layer
-                case 8:
-                    //Debug.Log("unit layer hit!");
-                    rend.startColor = Color.green;
-                    rend.endColor = Color.green;
-                    if (OVRInput.GetDown(selectDeselectButton)){
-                        Debug.Log("Trigger down!");
-                        if (selectedUnit != null)
+        void Update()
+        {
+
+            MoveSelector(rend);
+        }
+
+        public void MoveSelector(LineRenderer rend)
+        {
+
+            //make a new Ray pointing forward from hand
+            Ray ray;
+            ray = new Ray(selectingHand.transform.position, selectingHand.transform.forward);
+            RaycastHit hit;
+
+
+            //set linerender point 1 to hand starting point
+            points[0] = selectingHand.transform.position;
+
+
+            //if something was hit
+            if (Physics.Raycast(ray, out hit))
+            {
+                //set linerender point 2 to where raycast hit
+                points[1] = hit.point;
+
+                //give variable layer that was hit
+                LayerMask layerHit = hit.transform.gameObject.layer;
+
+                //which layer was hit?
+                switch (layerHit.value)
+                {
+                    //8 - Units layer - Raycast hit a unit
+                    case 8:
+                        // Make pointer linecolor2
+                        rend.startColor = lineColour2;
+                        rend.endColor = lineColour2;
+
+                        // Select/deselect button was pressed
+                        if (OVRInput.GetDown(selectDeselectButton))
                         {
-                            selectedUnit.gameObject.GetComponent<BasicUnitActions>().Selected(false);
+
+                            //send unit hit transform to selectunit function, multiselect disabled
+                            SelectUnit(hit.transform,false);
+                            //set as selected
+                            hit.transform.gameObject.GetComponent<BasicUnitActions>().Selected(true);
                         }
-                        selectedUnit = hit.transform;
-                        hit.transform.gameObject.GetComponent<BasicUnitActions>().Selected(true);
-                    } else
-                    {
-                        Debug.Log("Not triggering!");
-                    }
-                    break;
-                default:
-                   // Debug.Log("unknown layer hit!");
-                    rend.startColor = Color.red;
-                    rend.endColor = Color.red;
-                   if (OVRInput.GetDown(OVRInput.Button.One)){
-                        Debug.Log("Trigger down!");
-                        if (selectedUnit != null)
+ 
+                        break;
+                    default:
+                        //Make pointer linecolor1
+                        rend.startColor = lineColour1;
+                        rend.endColor = lineColour1;
+                        if (OVRInput.GetDown(OVRInput.Button.One))
                         {
-                            selectedUnit.gameObject.GetComponent<BasicUnitActions>().Selected(false);
+                            DeselectUnits();
+
                         }
-                        //hit.transform.gameObject.GetComponent<BasicUnitActions>().Selected(false);
-                    }
-                    break;
+                        break;
+                }
+                rend.material.color = rend.startColor;
+                rend.SetPositions(points);
+                rend.enabled = true;
             }
-            rend.material.color = rend.startColor;
-            rend.SetPositions(points);
-            rend.enabled = true;
-        }
-        else
-        {
-            //Debug.Log("nothing hit!");
-            rend.enabled = false;
+            //if something was not hit by raycast
+            else
+            {
+                //disable the linerender
+                rend.enabled = false;
+            }
+
         }
 
-       
+        private void SelectUnit(Transform unit, bool canMultiselect = false)
+        {
+            //clear selection list if multiselect disabled
+            if (!canMultiselect)
+            {
+                //deselect units
+                DeselectUnits();
+            }
+
+            selectedUnits.Add(unit);
+            //lets set an obj on the unit called Highlight
+            unit.gameObject.GetComponent<BasicUnitActions>().Selected(true);
+            //unit.Find("Highlight").gameObject.SetActive(true);
+        }
+
+        private void DeselectUnits()
+        {
+            //if there are already selected units in the list selectedUnits
+            if (selectedUnits != null)
+            {
+                //loop through list
+                for (int i = 0; i < selectedUnits.Count; i++)
+                {
+                    //deselect units
+                    selectedUnits[i].gameObject.GetComponent<BasicUnitActions>().Selected(false);
+                }
+                selectedUnits.Clear();
+            }
+        }
 
     }
-
 }

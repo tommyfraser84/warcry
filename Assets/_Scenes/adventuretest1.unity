@@ -5176,6 +5176,8 @@ MonoBehaviour:
   selectDeselectButton: 1
   moveButton: 2097152
   selectingHand: {fileID: 1151787302}
+  lineColour1: {r: 0, g: 0.51685286, b: 1, a: 0}
+  lineColour2: {r: 0, g: 1, b: 0.64504385, a: 0}
 --- !u!1001 &708317206
 PrefabInstance:
   m_ObjectHideFlags: 0
