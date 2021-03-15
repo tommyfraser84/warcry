@@ -9,9 +9,13 @@ namespace RTS1.Input
     public class InputManager : MonoBehaviour
     {
 
+        [Header("Button Settings")]
         //set variables to 
-        public OVRInput.Button selectDeselectButton, moveButton;
+        public OVRInput.Button selectDeselectButton;
+        public OVRInput.Button moveButton;
+        public OVRInput.Button multiSelectButton;
 
+      
         //allow component to be attached to gameobject in editor
         LineRenderer rend;
 
@@ -19,8 +23,10 @@ namespace RTS1.Input
         Vector3[] points;
 
         //List of units selected
+
         private List<Transform> selectedUnits = new List<Transform>();
 
+        [Header("LineRender Settings")]
         //The transform of the hand/object used to draw a linerender from
         public Transform selectingHand;
 
@@ -41,6 +47,7 @@ namespace RTS1.Input
 
         void Update()
         {
+            Debug.Log(OVRInput.Get(multiSelectButton));
 
             MoveSelector(rend);
         }
@@ -79,13 +86,9 @@ namespace RTS1.Input
                         // Select/deselect button was pressed
                         if (OVRInput.GetDown(selectDeselectButton))
                         {
-
-                            //send unit hit transform to selectunit function, multiselect disabled
-                            SelectUnit(hit.transform,false);
-                            //set as selected
-                            hit.transform.gameObject.GetComponent<BasicUnitActions>().Selected(true);
+                            //send unit hit transform to selectunit function, send whether multiselect is active
+                            SelectUnit(hit.transform, OVRInput.Get(multiSelectButton));
                         }
- 
                         break;
                     default:
                         //Make pointer linecolor1
@@ -111,8 +114,9 @@ namespace RTS1.Input
 
         }
 
-        private void SelectUnit(Transform unit, bool canMultiselect = false)
+        private void SelectUnit(Transform unit, bool canMultiselect)
         {
+            //Debug.Log(canMultiselect);
             //clear selection list if multiselect disabled
             if (!canMultiselect)
             {
