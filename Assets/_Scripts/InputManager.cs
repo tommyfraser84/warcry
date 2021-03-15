@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    
+
+    public OVRInput.Button selectDeselectButton, moveButton;
+    
     //allow component to be attached to gameobject in editor
     LineRenderer rend;
 
@@ -61,7 +65,7 @@ public class InputManager : MonoBehaviour
                     //Debug.Log("unit layer hit!");
                     rend.startColor = Color.green;
                     rend.endColor = Color.green;
-                    if (OVRInput.GetDown(OVRInput.Button.One)){
+                    if (OVRInput.GetDown(selectDeselectButton)){
                         Debug.Log("Trigger down!");
                         if (selectedUnit != null)
                         {

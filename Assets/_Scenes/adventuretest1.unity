@@ -5173,6 +5173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e09f08e989aedd40ac6445338866af6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectDeselectButton: 1
+  moveButton: 2097152
   selectingHand: {fileID: 1151787302}
 --- !u!1001 &708317206
 PrefabInstance:
