@@ -5,20 +5,22 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     //allow component to be attached to gameobject in editor
-    [SerializeField] LineRenderer rend;
+    LineRenderer rend;
 
-    public LayerMask layerMask;
+    //public LayerMask layerMask;
 
     //setup v3 array to store initial points
     Vector3[] points;
 
     Transform selectedUnit;
 
+    public Transform selectingHand;
+
     // Start is called before the first frame update
     void Start()
     {
 
-        rend = gameObject.GetComponent<LineRenderer>();
+        rend = selectingHand.GetComponent<LineRenderer>();
         rend.startColor = Color.red;
         rend.endColor = Color.red;
         points = new Vector3[2];
@@ -37,10 +39,10 @@ public class InputManager : MonoBehaviour
 
 
         Ray ray;
-        ray = new Ray(transform.position, transform.forward);
+        ray = new Ray(selectingHand.transform.position, selectingHand.transform.forward);
         RaycastHit hit;
 
-        points[0] = transform.position;
+        points[0] = selectingHand.transform.position;
 
    
 
@@ -61,6 +63,10 @@ public class InputManager : MonoBehaviour
                     rend.endColor = Color.green;
                     if (OVRInput.GetDown(OVRInput.Button.One)){
                         Debug.Log("Trigger down!");
+                        if (selectedUnit != null)
+                        {
+                            selectedUnit.gameObject.GetComponent<BasicUnitActions>().Selected(false);
+                        }
                         selectedUnit = hit.transform;
                         hit.transform.gameObject.GetComponent<BasicUnitActions>().Selected(true);
                     } else
