@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RTS1.Units;
+using RTS1.Units.Player;
 
 namespace RTS1.Input
 {
@@ -47,7 +48,7 @@ namespace RTS1.Input
 
         void Update()
         {
-            Debug.Log(OVRInput.Get(multiSelectButton));
+           // Debug.Log(OVRInput.Get(multiSelectButton));
 
             MoveSelector(rend);
         }
@@ -79,6 +80,7 @@ namespace RTS1.Input
                 {
                     //8 - Units layer - Raycast hit a unit
                     case 8:
+                        Debug.Log("Unit layer hit");
                         // Make pointer linecolor2
                         rend.startColor = lineColour2;
                         rend.endColor = lineColour2;
@@ -90,11 +92,34 @@ namespace RTS1.Input
                             SelectUnit(hit.transform, OVRInput.Get(multiSelectButton));
                         }
                         break;
+                    //12 - floor layer hit
+                    case 12:
+                        Debug.Log("Floor layer hit");
+                        rend.startColor = lineColour1;
+                        rend.endColor = lineColour1;
+                        if (OVRInput.GetDown(selectDeselectButton))
+                        {
+                            DeselectUnits();
+
+                        } else if (OVRInput.GetDown(moveButton) & HaveSelectedUnits())
+                        {
+                            foreach(Transform unit in selectedUnits)
+                            {
+                                //get playerunit script of selected unit in list
+                                PlayerUnit pU = unit.gameObject.GetComponent<PlayerUnit>();
+                               //trigger units moveunit function with vector3 of hit.point
+                                pU.MoveUnit(hit.point);
+                            }
+                            //loop through units in selectedunits
+                            //PlayerUnit pU = 
+                        }
+                        break;
                     default:
+                        Debug.Log("Different layer hit");
                         //Make pointer linecolor1
                         rend.startColor = lineColour1;
                         rend.endColor = lineColour1;
-                        if (OVRInput.GetDown(OVRInput.Button.One))
+                        if (OVRInput.GetDown(selectDeselectButton))
                         {
                             DeselectUnits();
 
@@ -142,6 +167,18 @@ namespace RTS1.Input
                     selectedUnits[i].gameObject.GetComponent<BasicUnitActions>().Selected(false);
                 }
                 selectedUnits.Clear();
+            }
+        }
+
+        private bool HaveSelectedUnits()
+        {
+            if (selectedUnits.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
