@@ -10,14 +10,14 @@ namespace RTS1.Units.Player
     public class PlayerUnit: MonoBehaviour
     {
         private NavMeshAgent navMeshAgent;
-        public Animator animator;
+        private Animator animator;
         public BasicUnitProperties basicUnitProperties;
         private PlayerUnitState playerUnitState;
         public GameObject selectedOutline;
         public PlayerUnit playerUnit;
 
         private float unitSpeed;
-        private string _animatorDefaultParam = "speed";
+        private string _animatorDefaultParam;
 
         public PlayerUnit(PlayerUnitState.UnitState unitState,BasicUnitProperties InputBasicUnitProperties)
         {
@@ -29,14 +29,17 @@ namespace RTS1.Units.Player
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
             animator = GetComponent<Animator>();
-            unitSpeed = basicUnitProperties.Speed;
+            unitSpeed = basicUnitProperties.Speed/10;
+            _animatorDefaultParam = "speed";
         }
 
         public void Update()
         {
-            float speedVal = Mathf.Clamp(navMeshAgent.speed, 0f, 1f);
-            Debug.Log(_animatorDefaultParam);
+            float speedVal = scale(0f,unitSpeed,0f,1f,navMeshAgent.speed);
+           // Debug.Log("speedVal: " + speedVal);
+           // Debug.Log(_animatorDefaultParam);
             animator.SetFloat(_animatorDefaultParam, speedVal);
+            Debug.Log("speed value: " + animator.GetFloat("speed"));
 
             //Distance between agent and current destination
             float dist = Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination);
@@ -51,14 +54,16 @@ namespace RTS1.Units.Player
         private void stop()
         {
             navMeshAgent.isStopped = true;
-            navMeshAgent.speed = 0f;
+            //navMeshAgent.speed = 0f;
         }
 
         public void move(Vector3 dest)
         {
-            Debug.Log("move attemped!");
+            //Debug.Log("move attemped!");
             navMeshAgent.destination = dest;
+            //Debug.Log("dest: " + dest);
             navMeshAgent.speed = unitSpeed;
+            //Debug.Log("unitSpeed: " + unitSpeed);
             navMeshAgent.isStopped = false;
         }
 
@@ -89,6 +94,16 @@ namespace RTS1.Units.Player
         {
             selectedOutline.SetActive(selected);
             basicUnitProperties.Selected = selected;
+        }
+
+        public float scale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)
+        {
+
+            float OldRange = (OldMax - OldMin);
+            float NewRange = (NewMax - NewMin);
+            float NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin;
+
+            return (NewValue);
         }
 
     }

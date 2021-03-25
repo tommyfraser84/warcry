@@ -5114,7 +5114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2be66651e9ad6314bae4e9a2d2c8643c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 703757755}
   basicUnitProperties: {fileID: 11400000, guid: 82575d2c689db804fa3efa81ee5028c7,
     type: 2}
   selectedOutline: {fileID: 955061034}
@@ -5129,7 +5128,7 @@ Animator:
   m_GameObject: {fileID: 703757749}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 1e54aa0f065cc114997c052d117cbeb2, type: 3}
-  m_Controller: {fileID: 9100000, guid: 048a5061a61a0e54cab4f4720887bb77, type: 2}
+  m_Controller: {fileID: 9100000, guid: d51192b4fa591a542896c1bbc2d7ed7d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

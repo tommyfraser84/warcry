@@ -13,16 +13,11 @@ MonoBehaviour:
   m_Name: Footman
   m_EditorClassIdentifier: 
   Name: Footman
-  Model: {fileID: 0}
   HP: 60
-  DamageMin: 1
-  DamageNormal: 9
+  DamageBasic: 0
+  DamagePiercing: 0
   Range: 0
   Armour: 2
-  MoveSpeed: 7
-  Selected: 0
+  Speed: 7
+  Selected: 1
   CanAttack: 1
-  status: 0
-  BuildTime: 600
-  BuildGold: 400
-  BuildLumber: 0

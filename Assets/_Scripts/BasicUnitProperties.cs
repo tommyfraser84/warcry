@@ -15,7 +15,7 @@ namespace RTS1.Units
         public int Range;
    
         public int Armour;
-        public int Speed;
+        public float Speed;
 
         public bool Selected;
         public bool CanAttack;

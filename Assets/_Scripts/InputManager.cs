@@ -99,11 +99,13 @@ namespace RTS1.Input
                         rend.endColor = lineColour1;
                         if (OVRInput.GetDown(selectDeselectButton))
                         {
+                           // Debug.Log("Units deselected!");
                             DeselectUnits();
 
                         } else if (OVRInput.GetDown(moveButton) & HaveSelectedUnits())
                         {
-                            foreach(Transform unit in selectedUnits)
+                            //Debug.Log("Units selected and move button pressed");
+                            foreach (Transform unit in selectedUnits)
                             {
                                 //get playerunit script of selected unit in list
                                 PlayerUnit pU = unit.gameObject.GetComponent<PlayerUnit>();
