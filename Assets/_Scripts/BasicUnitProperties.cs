@@ -15,21 +15,10 @@ namespace RTS1.Units
         public int Range;
    
         public int Armour;
-        public int MoveSpeed;
+        public int Speed;
 
         public bool Selected;
         public bool CanAttack;
 
-        public enum UnitStatus
-        {
-            Idle,
-            Walk,
-            Attack,
-            Dead
         }
-
-        public UnitStatus status;
-
-
     }
-}

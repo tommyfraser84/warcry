@@ -80,7 +80,7 @@ namespace RTS1.Input
                 {
                     //8 - Units layer - Raycast hit a unit
                     case 8:
-                        Debug.Log("Unit layer hit");
+                        //Debug.Log("Unit layer hit");
                         // Make pointer linecolor2
                         rend.startColor = lineColour2;
                         rend.endColor = lineColour2;
@@ -94,7 +94,7 @@ namespace RTS1.Input
                         break;
                     //12 - floor layer hit
                     case 12:
-                        Debug.Log("Floor layer hit");
+                        //Debug.Log("Floor layer hit");
                         rend.startColor = lineColour1;
                         rend.endColor = lineColour1;
                         if (OVRInput.GetDown(selectDeselectButton))
@@ -106,16 +106,16 @@ namespace RTS1.Input
                             foreach(Transform unit in selectedUnits)
                             {
                                 //get playerunit script of selected unit in list
-                                PlayerUnit pU = unit.gameObject.GetComponent<PlayerUnit>();
-                               //trigger units moveunit function with vector3 of hit.point
-                                pU.MoveUnit(hit.point);
+                                PlayerUnitController pUC = unit.gameObject.GetComponent<PlayerUnitController>();
+                                //trigger units moveunit function with vector3 of hit.point
+                                pUC.playerUnit.move(hit.point);
                             }
                             //loop through units in selectedunits
                             //PlayerUnit pU = 
                         }
                         break;
                     default:
-                        Debug.Log("Different layer hit");
+                        //Debug.Log("Different layer hit");
                         //Make pointer linecolor1
                         rend.startColor = lineColour1;
                         rend.endColor = lineColour1;

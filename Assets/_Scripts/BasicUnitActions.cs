@@ -9,29 +9,15 @@ namespace RTS1.Units
     {
         public BasicUnitProperties basicUnit;
         public GameObject selectedOutline;
+        public Animator animator;
 
-        public void Walk()
-        {
-            //change animation
-            basicUnit.status = BasicUnitProperties.UnitStatus.Walk;
-        }
+      //  public BasicUnitProperties.UnitStatus showStatus;
 
-        public void Idle()
+        private void Update()
         {
-            //change animation
-            basicUnit.status = BasicUnitProperties.UnitStatus.Idle;
+
         }
 
-        public void Attack()
-        {
-            //change animation
-            basicUnit.status = BasicUnitProperties.UnitStatus.Attack;
-        }
-        public void Dead()
-        {
-            //change animation
-            basicUnit.status = BasicUnitProperties.UnitStatus.Dead;
-        }
 
         public void Selected(bool selected)
         {
@@ -50,9 +36,11 @@ namespace RTS1.Units
 
             basicUnit.HP -= DamageTaken;
 
+            animator.SetTrigger("Take Damage");
+
             if (basicUnit.HP <= 0)
             {
-                Dead();
+               // Dead();
             }
             else
             {
