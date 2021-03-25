@@ -118,6 +118,12 @@ AnimatorStateMachine:
     m_State: {fileID: 8685692586462483460}
     m_Position: {x: 502.47424, y: 236.80414, z: 0}
   - serializedVersion: 1
+    m_State: {fileID: -6069675596729648196}
+    m_Position: {x: 563.1959, y: -50.927826, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 8685692586462483460}
+    m_Position: {x: 502.47424, y: 236.80414, z: 0}
+  - serializedVersion: 1
     m_State: {fileID: -3631410783735489551}
     m_Position: {x: 537.70056, y: 282.6025, z: 0}
   - serializedVersion: 1

@@ -10,7 +10,7 @@ namespace RTS1.Units.Player
     public class PlayerUnit: MonoBehaviour
     {
         private NavMeshAgent navMeshAgent;
-        public Animator animator;
+        private Animator animator;
         public BasicUnitProperties basicUnitProperties;
         private PlayerUnitState playerUnitState;
         public GameObject selectedOutline;
@@ -30,7 +30,7 @@ namespace RTS1.Units.Player
         public void Start()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
-            //animator = GetComponent<Animator>();
+            animator = GetComponent<Animator>();
             unitSpeed = basicUnitProperties.Speed/10;
             _animatorDefaultParam = "speed";
         }
