@@ -13,7 +13,7 @@ namespace RTS1.Input
         [Header("Button Settings")]
         //set variables to 
         public OVRInput.Button selectDeselectButton;
-        public OVRInput.Button moveButton;
+        public OVRInput.Button actionButton;
         public OVRInput.Button multiSelectButton;
 
       
@@ -31,7 +31,7 @@ namespace RTS1.Input
         //The transform of the hand/object used to draw a linerender from
         public Transform selectingHand;
 
-        public Color lineColour1, lineColour2;
+        public Color lineColour1, lineColour2, lineColour3;
 
         void Start()
         {
@@ -81,8 +81,11 @@ namespace RTS1.Input
                     //8 - Units layer - Raycast hit a unit
                     case 8:
                         //Debug.Log("Unit layer hit");
-                        // Make pointer linecolor2
-                        rend.startColor = lineColour2;
+
+                        //check if enemy unit or friendly unit
+
+                            // Make pointer linecolor2
+                            rend.startColor = lineColour2;
                         rend.endColor = lineColour2;
 
                         // Select/deselect button was pressed
@@ -102,7 +105,7 @@ namespace RTS1.Input
                            // Debug.Log("Units deselected!");
                             DeselectUnits();
 
-                        } else if (OVRInput.GetDown(moveButton) & HaveSelectedUnits())
+                        } else if (OVRInput.GetDown(actionButton) & HaveSelectedUnits())
                         {
                             //Debug.Log("Units selected and move button pressed");
                             foreach (Transform unit in selectedUnits)
@@ -153,7 +156,7 @@ namespace RTS1.Input
 
             selectedUnits.Add(unit);
             //lets set an obj on the unit called Highlight
-            unit.gameObject.GetComponent<PlayerUnit>().Selected(true);
+            unit.gameObject.GetComponent<PlayerUnit>().Select(true);
             //unit.Find("Highlight").gameObject.SetActive(true);
         }
 
@@ -166,7 +169,7 @@ namespace RTS1.Input
                 for (int i = 0; i < selectedUnits.Count; i++)
                 {
                     //deselect units
-                    selectedUnits[i].gameObject.GetComponent<PlayerUnit>().Selected(false);
+                    selectedUnits[i].gameObject.GetComponent<PlayerUnit>().Select(false);
                 }
                 selectedUnits.Clear();
             }

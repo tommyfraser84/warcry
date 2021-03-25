@@ -15,9 +15,11 @@ namespace RTS1.Units.Player
         private PlayerUnitState playerUnitState;
         public GameObject selectedOutline;
         public PlayerUnit playerUnit;
+        public bool Selected;
 
         private float unitSpeed;
         private string _animatorDefaultParam;
+
 
         public PlayerUnit(PlayerUnitState.UnitState unitState,BasicUnitProperties InputBasicUnitProperties)
         {
@@ -90,10 +92,10 @@ namespace RTS1.Units.Player
             }
         }
 
-        public void Selected(bool selected)
+        public void Select(bool selected)
         {
             selectedOutline.SetActive(selected);
-            basicUnitProperties.Selected = selected;
+            Selected = selected;
         }
 
         public float scale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)
