@@ -5091,11 +5091,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectDeselectButton: 1
-  moveButton: 2097152
+  actionButton: 0
   multiSelectButton: 4194304
   selectingHand: {fileID: 1151787302}
   lineColour1: {r: 0, g: 0.51685286, b: 1, a: 0}
   lineColour2: {r: 0, g: 1, b: 0.64504385, a: 0}
+  lineColour3: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &703757749 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6795529171222698614, guid: fda8f99e6c9161741be691ab2a7ad5e6,
@@ -5114,29 +5115,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2be66651e9ad6314bae4e9a2d2c8643c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 1586953019}
   basicUnitProperties: {fileID: 11400000, guid: 82575d2c689db804fa3efa81ee5028c7,
     type: 2}
   selectedOutline: {fileID: 955061034}
   playerUnit: {fileID: 703757750}
---- !u!95 &703757755
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 703757749}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 1e54aa0f065cc114997c052d117cbeb2, type: 3}
-  m_Controller: {fileID: 9100000, guid: d51192b4fa591a542896c1bbc2d7ed7d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  Selected: 0
 --- !u!1001 &708317206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16160,6 +16144,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 483677329, guid: fda8f99e6c9161741be691ab2a7ad5e6, type: 3}
+      propertyPath: m_WalkableMask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 483677329, guid: fda8f99e6c9161741be691ab2a7ad5e6, type: 3}
       propertyPath: m_StoppingDistance
       value: 0.1
       objectReference: {fileID: 0}
@@ -16178,6 +16166,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Footman
       objectReference: {fileID: 0}
+    - target: {fileID: 3723155600101440183, guid: fda8f99e6c9161741be691ab2a7ad5e6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3723155600101440183, guid: fda8f99e6c9161741be691ab2a7ad5e6,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d51192b4fa591a542896c1bbc2d7ed7d, type: 2}
     - target: {fileID: 6795529171222698612, guid: fda8f99e6c9161741be691ab2a7ad5e6,
         type: 3}
       propertyPath: m_Size.x
