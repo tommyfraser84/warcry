@@ -106,9 +106,9 @@ namespace RTS1.Input
                             foreach(Transform unit in selectedUnits)
                             {
                                 //get playerunit script of selected unit in list
-                                PlayerUnitController pUC = unit.gameObject.GetComponent<PlayerUnitController>();
+                                PlayerUnit pU = unit.gameObject.GetComponent<PlayerUnit>();
                                 //trigger units moveunit function with vector3 of hit.point
-                                pUC.playerUnit.move(hit.point);
+                                pU.move(hit.point);
                             }
                             //loop through units in selectedunits
                             //PlayerUnit pU = 
@@ -151,7 +151,7 @@ namespace RTS1.Input
 
             selectedUnits.Add(unit);
             //lets set an obj on the unit called Highlight
-            unit.gameObject.GetComponent<BasicUnitActions>().Selected(true);
+            unit.gameObject.GetComponent<PlayerUnit>().Selected(true);
             //unit.Find("Highlight").gameObject.SetActive(true);
         }
 
@@ -164,7 +164,7 @@ namespace RTS1.Input
                 for (int i = 0; i < selectedUnits.Count; i++)
                 {
                     //deselect units
-                    selectedUnits[i].gameObject.GetComponent<BasicUnitActions>().Selected(false);
+                    selectedUnits[i].gameObject.GetComponent<PlayerUnit>().Selected(false);
                 }
                 selectedUnits.Clear();
             }

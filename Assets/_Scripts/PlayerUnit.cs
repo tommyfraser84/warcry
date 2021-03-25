@@ -7,35 +7,32 @@ using UnityEngine.AI;
 namespace RTS1.Units.Player
 {
    
-    public class PlayerUnit
+    public class PlayerUnit: MonoBehaviour
     {
         private NavMeshAgent navMeshAgent;
-        private Animator animator;
-        private BasicUnitProperties basicUnitProperties;
+        public Animator animator;
+        public BasicUnitProperties basicUnitProperties;
         private PlayerUnitState playerUnitState;
-        private string _animatorDefaultParam = "speed";
+        public GameObject selectedOutline;
+        public PlayerUnit playerUnit;
 
         private float unitSpeed;
+        private string _animatorDefaultParam = "speed";
 
         public PlayerUnit(PlayerUnitState.UnitState unitState,BasicUnitProperties InputBasicUnitProperties)
         {
             playerUnitState = new PlayerUnitState(unitState);
-            basicUnitProperties = InputBasicUnitProperties;
+
         }
 
-        public void init(GameObject self)
+        public void Start()
         {
-            navMeshAgent = self.GetComponent<NavMeshAgent>();
-            animator = self.GetComponent<Animator>();
-
-            //basicUnitProperties = self.GetComponent<BasicUnitProperties>();
-
+            navMeshAgent = GetComponent<NavMeshAgent>();
+            animator = GetComponent<Animator>();
             unitSpeed = basicUnitProperties.Speed;
-
-            //_animatorDefaultParam = "speed";
         }
 
-        public void myUpdate()
+        public void Update()
         {
             float speedVal = Mathf.Clamp(navMeshAgent.speed, 0f, 1f);
             Debug.Log(_animatorDefaultParam);
@@ -59,9 +56,39 @@ namespace RTS1.Units.Player
 
         public void move(Vector3 dest)
         {
+            Debug.Log("move attemped!");
             navMeshAgent.destination = dest;
             navMeshAgent.speed = unitSpeed;
             navMeshAgent.isStopped = false;
+        }
+
+        public void TakeDamage(int DamageBasic, int DamagePiercing)
+        {
+            // (Basic Damage - Target's Armor) + Piercing Damage = Maximum damage inflicted
+            //The attacker does a random amount of damage from 50%-100% of this total each attack.
+
+            int DamageTaken = Mathf.RoundToInt(((DamageBasic - basicUnitProperties.Armour) + DamagePiercing) * Random.Range(0.5f, 1));
+
+            Debug.Log(DamageTaken);
+
+            basicUnitProperties.HP -= DamageTaken;
+
+            animator.SetTrigger("Take Damage");
+
+            if (basicUnitProperties.HP <= 0)
+            {
+                // Dead();
+            }
+            else
+            {
+                //damage anim
+            }
+        }
+
+        public void Selected(bool selected)
+        {
+            selectedOutline.SetActive(selected);
+            basicUnitProperties.Selected = selected;
         }
 
     }
