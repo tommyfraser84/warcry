@@ -15,11 +15,9 @@ namespace RTS1.Units.Player
         private PlayerUnitState playerUnitState;
         public GameObject selectedOutline;
         public PlayerUnit playerUnit;
-        public bool Selected;
 
         private float unitSpeed;
         private string _animatorDefaultParam;
-
 
         public PlayerUnit(PlayerUnitState.UnitState unitState,BasicUnitProperties InputBasicUnitProperties)
         {
@@ -30,16 +28,20 @@ namespace RTS1.Units.Player
         public void Start()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
-            
+            //animator = GetComponent<Animator>();
             unitSpeed = basicUnitProperties.Speed/10;
             _animatorDefaultParam = "speed";
         }
 
         public void Update()
         {
+            Debug.Log("navMeshAgent.speed: " + navMeshAgent.speed);
+            
             float speedVal = scale(0f,unitSpeed,0f,1f,navMeshAgent.speed);
-           // Debug.Log("speedVal: " + speedVal);
-           // Debug.Log(_animatorDefaultParam);
+
+            Debug.Log("speedVal: " + speedVal);
+            // Debug.Log("speedVal: " + speedVal);
+            // Debug.Log(_animatorDefaultParam);
             animator.SetFloat(_animatorDefaultParam, speedVal);
             Debug.Log("speed value: " + animator.GetFloat("speed"));
 
@@ -56,7 +58,7 @@ namespace RTS1.Units.Player
         private void stop()
         {
             navMeshAgent.isStopped = true;
-            //navMeshAgent.speed = 0f;
+            navMeshAgent.speed = 0f;
         }
 
         public void move(Vector3 dest)
@@ -92,10 +94,10 @@ namespace RTS1.Units.Player
             }
         }
 
-        public void Select(bool selected)
+        public void Selected(bool selected)
         {
             selectedOutline.SetActive(selected);
-            Selected = selected;
+            basicUnitProperties.Selected = selected;
         }
 
         public float scale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)

@@ -5091,12 +5091,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectDeselectButton: 1
-  actionButton: 0
+  moveButton: 2097152
   multiSelectButton: 4194304
   selectingHand: {fileID: 1151787302}
   lineColour1: {r: 0, g: 0.51685286, b: 1, a: 0}
   lineColour2: {r: 0, g: 1, b: 0.64504385, a: 0}
-  lineColour3: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &703757749 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6795529171222698614, guid: fda8f99e6c9161741be691ab2a7ad5e6,
@@ -5120,7 +5119,6 @@ MonoBehaviour:
     type: 2}
   selectedOutline: {fileID: 955061034}
   playerUnit: {fileID: 703757750}
-  Selected: 0
 --- !u!1001 &708317206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16144,10 +16142,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 483677329, guid: fda8f99e6c9161741be691ab2a7ad5e6, type: 3}
-      propertyPath: m_WalkableMask
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 483677329, guid: fda8f99e6c9161741be691ab2a7ad5e6, type: 3}
       propertyPath: m_StoppingDistance
       value: 0.1
       objectReference: {fileID: 0}
@@ -16165,11 +16159,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Footman
-      objectReference: {fileID: 0}
-    - target: {fileID: 3723155600101440183, guid: fda8f99e6c9161741be691ab2a7ad5e6,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3723155600101440183, guid: fda8f99e6c9161741be691ab2a7ad5e6,
         type: 3}
