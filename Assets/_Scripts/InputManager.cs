@@ -13,7 +13,7 @@ namespace RTS1.Input
         [Header("Button Settings")]
         //set variables to 
         public OVRInput.Button selectDeselectButton;
-        public OVRInput.Button moveButton;
+        public OVRInput.Button actionButton;
         public OVRInput.Button multiSelectButton;
 
       
@@ -31,7 +31,7 @@ namespace RTS1.Input
         //The transform of the hand/object used to draw a linerender from
         public Transform selectingHand;
 
-        public Color lineColour1, lineColour2;
+        public Color lineColour1, lineColour2, lineColour3;
 
         void Start()
         {
@@ -102,7 +102,7 @@ namespace RTS1.Input
                            // Debug.Log("Units deselected!");
                             DeselectUnits();
 
-                        } else if (OVRInput.GetDown(moveButton) & HaveSelectedUnits())
+                        } else if (OVRInput.GetDown(actionButton) & HaveSelectedUnits())
                         {
                             //Debug.Log("Units selected and move button pressed");
                             foreach (Transform unit in selectedUnits)
@@ -110,10 +110,27 @@ namespace RTS1.Input
                                 //get playerunit script of selected unit in list
                                 PlayerUnit pU = unit.gameObject.GetComponent<PlayerUnit>();
                                 //trigger units moveunit function with vector3 of hit.point
-                                pU.move(hit.point);
+                                pU.Move(hit.point);
                             }
                             //loop through units in selectedunits
                             //PlayerUnit pU = 
+                        }
+                        break;
+                    //enemy unit layer hit
+                    case 13:
+                        rend.startColor = lineColour3;
+                        rend.endColor = lineColour3;
+                        if (OVRInput.GetDown(actionButton) & HaveSelectedUnits())
+                        {
+                            Transform target = hit.transform;
+                            foreach (Transform unit in selectedUnits)
+                            {
+
+                                //get playerunit script of selected unit in list
+                                PlayerUnit pU = unit.gameObject.GetComponent<PlayerUnit>();
+                                pU.Target(target);
+                            
+                            }
                         }
                         break;
                     default:

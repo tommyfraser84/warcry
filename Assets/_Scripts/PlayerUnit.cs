@@ -31,15 +31,15 @@ namespace RTS1.Units.Player
 
         public void Update()
         {
-            Debug.Log("navMeshAgent.speed: " + navMeshAgent.speed);
+            //Debug.Log("navMeshAgent.speed: " + navMeshAgent.speed);
             
             float speedVal = scale(0f,unitSpeed,0f,1f,navMeshAgent.speed);
 
-            Debug.Log("speedVal: " + speedVal);
+            //Debug.Log("speedVal: " + speedVal);
             // Debug.Log("speedVal: " + speedVal);
             // Debug.Log(_animatorDefaultParam);
             animator.SetFloat(_animatorDefaultParam, speedVal);
-            Debug.Log("speed value: " + animator.GetFloat("speed"));
+            //Debug.Log("speed value: " + animator.GetFloat("speed"));
 
             //Distance between agent and current destination
             float dist = Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination);
@@ -47,20 +47,20 @@ namespace RTS1.Units.Player
 
             //Check if arrived at destination so it can stop
             if (dist < navMeshAgent.stoppingDistance)
-                stop();
+                Stop();
 
         }
 
-        private void stop()
+        private void Stop()
         {
             navMeshAgent.isStopped = true;
             navMeshAgent.speed = 0f;
             playerUnitState.ChangeState(PlayerUnitState.UnitState.Idle);
         }
 
-        public void move(Vector3 dest)
+        public void Move(Vector3 dest)
         {
-            //Debug.Log("move attemped!");
+            Debug.Log("move attemped!");
             navMeshAgent.destination = dest;
             //Debug.Log("dest: " + dest);
             navMeshAgent.speed = unitSpeed;
@@ -68,6 +68,30 @@ namespace RTS1.Units.Player
             navMeshAgent.isStopped = false;
             playerUnitState.ChangeState(PlayerUnitState.UnitState.Walk);
         }
+
+        public void Target(Transform target)
+        {
+           // playerUnitState.SetTarget(target);
+           //if target it is within range attack
+     
+
+            if (Vector3.Distance(target.position,transform.position)<= basicUnitProperties.Range)
+            {
+                Debug.Log("within range!");
+                Attack(target);
+            } else
+            {
+                Debug.Log("not within range!, get closer!");
+                Move(target.position);
+            }
+            // otherwise move towards
+
+        }
+
+        public void Attack(Transform target)
+        {
+
+        } 
 
         public void TakeDamage(int DamageBasic, int DamagePiercing)
         {

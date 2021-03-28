@@ -16,7 +16,7 @@ MonoBehaviour:
   HP: 60
   DamageBasic: 0
   DamagePiercing: 0
-  Range: 0
+  Range: 10
   Armour: 2
   Speed: 5
   Selected: 1
