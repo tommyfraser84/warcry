@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace RTS1.Units.Player
 {
-    public class PlayerUnitState: ScriptableObject
+    public class PlayerUnitState
     {
+
         public PlayerUnitState(UnitState startState)
         {
             state = startState;

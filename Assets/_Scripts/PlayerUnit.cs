@@ -19,18 +19,14 @@ namespace RTS1.Units.Player
         private float unitSpeed;
         private string _animatorDefaultParam;
 
-        public PlayerUnit(PlayerUnitState.UnitState unitState,BasicUnitProperties InputBasicUnitProperties)
-        {
-            playerUnitState = new PlayerUnitState(unitState);
-
-        }
-
         public void Start()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
             //animator = GetComponent<Animator>();
             unitSpeed = basicUnitProperties.Speed/10;
             _animatorDefaultParam = "speed";
+            playerUnitState = new PlayerUnitState(PlayerUnitState.UnitState.Idle);
+
         }
 
         public void Update()
