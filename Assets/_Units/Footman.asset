@@ -18,6 +18,6 @@ MonoBehaviour:
   DamagePiercing: 0
   Range: 0
   Armour: 2
-  Speed: 7
+  Speed: 5
   Selected: 1
   CanAttack: 1

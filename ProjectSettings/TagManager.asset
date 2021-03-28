@@ -13,12 +13,12 @@ TagManager:
   - UI
   - 
   - 
-  - Unit
+  - Player Unit
   - Ground
   - Selectable
   - Player
   - Floor
-  - 
+  - Enemy Unit
   - 
   - 
   - 

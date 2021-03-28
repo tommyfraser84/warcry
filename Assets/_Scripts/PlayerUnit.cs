@@ -59,6 +59,7 @@ namespace RTS1.Units.Player
         {
             navMeshAgent.isStopped = true;
             navMeshAgent.speed = 0f;
+            playerUnitState.ChangeState(PlayerUnitState.UnitState.Idle);
         }
 
         public void move(Vector3 dest)
@@ -69,6 +70,7 @@ namespace RTS1.Units.Player
             navMeshAgent.speed = unitSpeed;
             //Debug.Log("unitSpeed: " + unitSpeed);
             navMeshAgent.isStopped = false;
+            playerUnitState.ChangeState(PlayerUnitState.UnitState.Walk);
         }
 
         public void TakeDamage(int DamageBasic, int DamagePiercing)
