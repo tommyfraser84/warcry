@@ -9,7 +9,7 @@ public class AggroTrigger : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        Debug.Log("Collision!");
+        //Debug.Log("Collision!");
         //if there is no target currently set
         if (playerUnit.GetTarget() == null)
         {
@@ -17,7 +17,7 @@ public class AggroTrigger : MonoBehaviour
             //if enemy is within sphere aggro range
             if (other.gameObject.layer == 13)
             {
-                Debug.Log("");
+                Debug.Log("enemy set");
                 playerUnit.SetMove(other.transform.position);
                 playerUnit.SetTarget(other.transform);
             }

@@ -78,20 +78,27 @@ namespace RTS1.Units.Player
             float dist = Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination);
 
             //if a target is set, make navmesh destination same as targets position
-            if (currentTarget != null) navMeshAgent.destination = currentTarget.position;
+            //if (currentTarget != null) navMeshAgent.destination = currentTarget.position;
 
             //Check if arrived at destination
             if (dist < navMeshAgent.stoppingDistance)
             {
-                //is there an enemy within range at destination? If so attack, otherwise just stop
                 Stop();
+                //is there an enemy within range at destination? If so attack, otherwise just stop
+                if (GetTarget() != null && playerUnitState.GetCurrentState() != PlayerUnitState.UnitState.Attack)
+                {
+                    Attack(currentTarget);
+                }    
             }
-
         }
 
-        public void Attack(Transform target)
+        private void Attack(Transform target)
         {
-
+            playerUnitState.ChangeState(PlayerUnitState.UnitState.Attack);
+            //set animator trigger for attack
+            animator.SetBool("Attack",true);
+            //perform enemy takedamage on enemy unit
+            //target.getComponent<PlayerUnit>().TakeDamage();
         } 
 
         public void TakeDamage(int DamageBasic, int DamagePiercing)

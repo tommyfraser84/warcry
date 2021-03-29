@@ -21,7 +21,7 @@ namespace RTS1.Units.Player
         }
 
         private UnitState state;
-        private Transform target;
+
 
         public UnitState GetCurrentState()
         {
@@ -31,11 +31,6 @@ namespace RTS1.Units.Player
         public void ChangeState(UnitState changeState)
         {
             state = changeState;
-        }
-
-        public void SetTarget(Transform enemyTransform)
-        {
-            target = enemyTransform;
         }
 
     }
