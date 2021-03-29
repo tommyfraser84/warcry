@@ -15,6 +15,7 @@ namespace RTS1.Units.Player
         private PlayerUnitState playerUnitState;
         public GameObject selectedOutline;
         public PlayerUnit playerUnit;
+        private Transform currentTarget;
 
         private float unitSpeed;
         private string _animatorDefaultParam;
@@ -31,23 +32,7 @@ namespace RTS1.Units.Player
 
         public void Update()
         {
-            //Debug.Log("navMeshAgent.speed: " + navMeshAgent.speed);
-            
-            float speedVal = scale(0f,unitSpeed,0f,1f,navMeshAgent.speed);
-
-            //Debug.Log("speedVal: " + speedVal);
-            // Debug.Log("speedVal: " + speedVal);
-            // Debug.Log(_animatorDefaultParam);
-            animator.SetFloat(_animatorDefaultParam, speedVal);
-            //Debug.Log("speed value: " + animator.GetFloat("speed"));
-
-            //Distance between agent and current destination
-            float dist = Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination);
-
-
-            //Check if arrived at destination so it can stop
-            if (dist < navMeshAgent.stoppingDistance)
-                Stop();
+            Move();
 
         }
 
@@ -58,7 +43,7 @@ namespace RTS1.Units.Player
             playerUnitState.ChangeState(PlayerUnitState.UnitState.Idle);
         }
 
-        public void Move(Vector3 dest)
+        public void SetMove(Vector3 dest)
         {
             Debug.Log("move attemped!");
             navMeshAgent.destination = dest;
@@ -69,22 +54,38 @@ namespace RTS1.Units.Player
             playerUnitState.ChangeState(PlayerUnitState.UnitState.Walk);
         }
 
-        public void Target(Transform target)
+        public void SetTarget(Transform target)
         {
-           // playerUnitState.SetTarget(target);
-           //if target it is within range attack
-     
+            currentTarget = target;
+        }
 
-            if (Vector3.Distance(target.position,transform.position)<= basicUnitProperties.Range)
+        public Transform GetTarget()
+        {
+            return currentTarget;
+        }
+
+
+        private void Move()
+        {            
+            //Create animator speedvalue based on unit speed property
+            float animatorSpeedVal = scale(0f, unitSpeed, 0f, 1f, navMeshAgent.speed);
+
+            //Set animator with the value
+            animator.SetFloat(_animatorDefaultParam, animatorSpeedVal);
+
+
+            //Distance between agent and current destination
+            float dist = Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination);
+
+            //if a target is set, make navmesh destination same as targets position
+            if (currentTarget != null) navMeshAgent.destination = currentTarget.position;
+
+            //Check if arrived at destination
+            if (dist < navMeshAgent.stoppingDistance)
             {
-                Debug.Log("within range!");
-                Attack(target);
-            } else
-            {
-                Debug.Log("not within range!, get closer!");
-                Move(target.position);
+                //is there an enemy within range at destination? If so attack, otherwise just stop
+                Stop();
             }
-            // otherwise move towards
 
         }
 

@@ -110,7 +110,7 @@ namespace RTS1.Input
                                 //get playerunit script of selected unit in list
                                 PlayerUnit pU = unit.gameObject.GetComponent<PlayerUnit>();
                                 //trigger units moveunit function with vector3 of hit.point
-                                pU.Move(hit.point);
+                                pU.SetMove(hit.point);
                             }
                             //loop through units in selectedunits
                             //PlayerUnit pU = 
@@ -122,14 +122,14 @@ namespace RTS1.Input
                         rend.endColor = lineColour3;
                         if (OVRInput.GetDown(actionButton) & HaveSelectedUnits())
                         {
-                            Transform target = hit.transform;
+                            
                             foreach (Transform unit in selectedUnits)
                             {
 
                                 //get playerunit script of selected unit in list
                                 PlayerUnit pU = unit.gameObject.GetComponent<PlayerUnit>();
-                                pU.Target(target);
-                            
+                                pU.SetMove(hit.transform.position);
+                                pU.SetTarget(hit.transform);
                             }
                         }
                         break;
