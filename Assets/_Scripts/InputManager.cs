@@ -110,7 +110,7 @@ namespace RTS1.Input
                                 //get playerunit script of selected unit in list
                                 PlayerUnit pU = unit.gameObject.GetComponent<PlayerUnit>();
                                 //trigger units moveunit function with vector3 of hit.point
-                                pU.SetMove(hit.point);
+                                pU.Move(hit.point);
                             }
                             //loop through units in selectedunits
                             //PlayerUnit pU = 
@@ -128,8 +128,7 @@ namespace RTS1.Input
 
                                 //get playerunit script of selected unit in list
                                 PlayerUnit pU = unit.gameObject.GetComponent<PlayerUnit>();
-                                pU.SetMove(hit.transform.position);
-                                pU.SetTarget(hit.transform);
+                                pU.Move(hit.transform.position);
                             }
                         }
                         break;

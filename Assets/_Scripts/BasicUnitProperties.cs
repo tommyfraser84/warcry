@@ -9,16 +9,15 @@ namespace RTS1.Units
     {
         public string Name;
 
-        public int HP;
-        public int DamageBasic;
-        public int DamagePiercing;
-        public int Range;
-   
-        public int Armour;
-        public float Speed;
+        public float hp;
+        public float damageBasic;
+        public float damagePiercing;
+        public float aggroRange;
+        public float attkRange;
 
-        public bool Selected;
-        public bool CanAttack;
+        public float armour;
+        public float speed;
+
 
         }
     }

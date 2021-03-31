@@ -11,6 +11,7 @@ public class AggroTrigger : MonoBehaviour
     {
         //Debug.Log("Collision!");
         //if there is no target currently set
+        /*
         if (playerUnit.GetTarget() == null)
         {
             Debug.Log("no target at the moment");
@@ -23,5 +24,7 @@ public class AggroTrigger : MonoBehaviour
             }
         }
     }
-
+    */
+    }
 }
+
