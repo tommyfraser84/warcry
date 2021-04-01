@@ -17083,6 +17083,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2136583046}
     m_Modifications:
+    - target: {fileID: 2013201404556402288, guid: 5adfb1b96b64ff1468f9a3cfa1431e60,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2907946881007558528, guid: 5adfb1b96b64ff1468f9a3cfa1431e60,
         type: 3}
       propertyPath: m_StoppingDistance
