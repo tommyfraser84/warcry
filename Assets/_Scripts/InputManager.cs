@@ -84,27 +84,29 @@ namespace RTS1.Input
                         // Make pointer linecolor2
                         rend.startColor = lineColour2;
                         rend.endColor = lineColour2;
+                        //Debug.Log("case 8 - units layer");
 
                         // Select/deselect button was pressed
                         if (OVRInput.GetDown(selectDeselectButton))
                         {
                             //send unit hit transform to selectunit function, send whether multiselect is active
+                            Debug.Log("8 - unit layer hit and selectbutton pressed");
                             SelectUnit(hit.transform, OVRInput.Get(multiSelectButton));
                         }
                         break;
                     //12 - floor layer hit
                     case 12:
-                        //Debug.Log("Floor layer hit");
+                       //Debug.Log("Floor layer hit");
                         rend.startColor = lineColour1;
                         rend.endColor = lineColour1;
                         if (OVRInput.GetDown(selectDeselectButton))
                         {
-                           // Debug.Log("Units deselected!");
+                          Debug.Log("12 - Units deselected!");
                             DeselectUnits();
 
                         } else if (OVRInput.GetDown(actionButton) & HaveSelectedUnits())
                         {
-                            //Debug.Log("Units selected and move button pressed");
+                            Debug.Log("12 - Units selected and move button pressed");
                             foreach (Transform unit in selectedUnits)
                             {
                                 //get playerunit script of selected unit in list
@@ -118,6 +120,7 @@ namespace RTS1.Input
                         break;
                     //enemy unit layer hit
                     case 13:
+                        // Debug.Log("Enemy layer hit");
                         rend.startColor = lineColour3;
                         rend.endColor = lineColour3;
                         if (OVRInput.GetDown(actionButton) & HaveSelectedUnits())
@@ -159,6 +162,7 @@ namespace RTS1.Input
 
         private void SelectUnit(Transform unit, bool canMultiselect)
         {
+            Debug.Log("SelectUnit()");
             //Debug.Log(canMultiselect);
             //clear selection list if multiselect disabled
             if (!canMultiselect)
@@ -167,14 +171,18 @@ namespace RTS1.Input
                 DeselectUnits();
             }
 
-            selectedUnits.Add(unit);
-            //lets set an obj on the unit called Highlight
-            unit.gameObject.GetComponent<PlayerUnit>().Selected(true);
-            //unit.Find("Highlight").gameObject.SetActive(true);
+                selectedUnits.Add(unit);
+                //lets set an obj on the unit called Highlight
+                Debug.Log("Selected: " + unit.gameObject.GetComponent<PlayerUnit>().CheckSelected());
+                unit.gameObject.GetComponent<PlayerUnit>().Selected(true);
+                //unit.
+                Debug.Log("Selected: " + unit.gameObject.GetComponent<PlayerUnit>().CheckSelected());
+                //unit.Find("Highlight").gameObject.SetActive(true);
         }
 
         private void DeselectUnits()
         {
+            Debug.Log("DeselectUnits()");
             //if there are already selected units in the list selectedUnits
             if (selectedUnits != null)
             {

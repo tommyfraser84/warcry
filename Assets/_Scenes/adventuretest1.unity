@@ -265,6 +265,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 65861914647900392, guid: 9154d83fdcda70f4f84028ccd30286a2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9154d83fdcda70f4f84028ccd30286a2, type: 3}
 --- !u!1001 &3087516
@@ -5380,7 +5385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectDeselectButton: 1
   actionButton: 2097152
-  multiSelectButton: 4194304
+  multiSelectButton: 0
   selectingHand: {fileID: 1151787302}
   lineColour1: {r: 0, g: 0.51685286, b: 1, a: 0}
   lineColour2: {r: 0, g: 1, b: 0.64504385, a: 0}
@@ -17093,6 +17098,16 @@ PrefabInstance:
       propertyPath: m_StoppingDistance
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 2907946881875843653, guid: 5adfb1b96b64ff1468f9a3cfa1431e60,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2907946881875843655, guid: 5adfb1b96b64ff1468f9a3cfa1431e60,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8508860517061799525, guid: 5adfb1b96b64ff1468f9a3cfa1431e60,
         type: 3}
       propertyPath: aggroTrigger
@@ -17141,7 +17156,7 @@ PrefabInstance:
     - target: {fileID: 8508860517273948518, guid: 5adfb1b96b64ff1468f9a3cfa1431e60,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.12
+      value: 0.508
       objectReference: {fileID: 0}
     - target: {fileID: 8508860517273948518, guid: 5adfb1b96b64ff1468f9a3cfa1431e60,
         type: 3}

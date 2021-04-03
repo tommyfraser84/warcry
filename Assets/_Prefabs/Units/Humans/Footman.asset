@@ -19,4 +19,4 @@ MonoBehaviour:
   aggroRange: 0
   attkRange: 0
   armour: 0
-  speed: 6
+  speed: 4

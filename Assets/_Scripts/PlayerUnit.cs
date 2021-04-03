@@ -35,8 +35,20 @@ namespace RTS1.Units.Player
 
         public void Update()
         {
-            //Move();
 
+            //Create animator speedvalue based on unit speed property
+            float animatorSpeedVal = scale(0f, unitSpeed, 0f, 1f, navMeshAgent.speed);
+
+            //Set animator with the value
+            animator.SetFloat(_animatorDefaultParam, animatorSpeedVal);
+            //Move();
+            float dist = Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination);
+            if (dist < navMeshAgent.stoppingDistance)
+            {
+                Stop();
+                //is there an enemy within range at destination? If so attack, otherwise just stop
+
+            }
         }
 
         private void Stop()
@@ -48,17 +60,9 @@ namespace RTS1.Units.Player
 
         public void Move(Vector3 dest)
         {
-            //Create animator speedvalue based on unit speed property
-            float animatorSpeedVal = scale(0f, unitSpeed, 0f, 1f, navMeshAgent.speed);
-
-            //Set animator with the value
-            animator.SetFloat(_animatorDefaultParam, animatorSpeedVal);
-
-            //Distance between agent and current destination
-            float dist = Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination);
-
 
             Debug.Log("move attemped!");
+
             navMeshAgent.destination = dest;
             //Debug.Log("dest: " + dest);
             navMeshAgent.speed = unitSpeed;
@@ -66,12 +70,7 @@ namespace RTS1.Units.Player
             navMeshAgent.isStopped = false;
             playerUnitState.ChangeState(PlayerUnitState.UnitState.Walk);
 
-            if (dist < navMeshAgent.stoppingDistance)
-            {
-                Stop();
-                //is there an enemy within range at destination? If so attack, otherwise just stop
 
-            }
         }
 
 
@@ -100,8 +99,15 @@ namespace RTS1.Units.Player
 
         public void Selected(bool isSelected)
         {
-            selectedOutline.SetActive(selected);
+            Debug.Log("Selected function");
+           
             selected = isSelected;
+            selectedOutline.SetActive(selected);
+        }
+
+        public bool CheckSelected()
+        {
+            return selected;
         }
 
         public float scale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)
