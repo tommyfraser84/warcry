@@ -16,7 +16,7 @@ MonoBehaviour:
   hp: 200
   damageBasic: 0
   damagePiercing: 0
-  aggroRange: 0
+  aggroRange: 2
   attkRange: 0
   armour: 0
   speed: 4

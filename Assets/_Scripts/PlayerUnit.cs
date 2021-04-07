@@ -9,7 +9,7 @@ namespace RTS1.Units.Player
    
     public class PlayerUnit: MonoBehaviour
     {
-        private NavMeshAgent navMeshAgent;
+        public NavMeshAgent navMeshAgent;
         public Animator animator;
         public BasicUnitProperties basicUnitProperties;
         private PlayerUnitState playerUnitState;

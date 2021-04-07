@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Grunt
   m_EditorClassIdentifier: 
   Name: Grunt
-  HP: 0
-  DamageBasic: 0
-  DamagePiercing: 0
-  Range: 0
-  Armour: 0
-  Speed: 0
-  CanAttack: 1
+  hp: 0
+  damageBasic: 0
+  damagePiercing: 0
+  aggroRange: 1.5
+  attkRange: 0
+  armour: 0
+  speed: 5
