@@ -25,7 +25,7 @@ namespace RTS1.Input
 
         //List of units selected
 
-        private List<Transform> selectedUnits = new List<Transform>();
+        public List<Transform> selectedUnits = new List<Transform>();
 
         [Header("LineRender Settings")]
         //The transform of the hand/object used to draw a linerender from

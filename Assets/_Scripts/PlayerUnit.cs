@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
+using RTS1.Input;
 
 
 namespace RTS1.Units.Player
@@ -17,11 +19,38 @@ namespace RTS1.Units.Player
         public PlayerUnit playerUnit;
         private Transform currentTarget;
 
+        public InputManager inputManager;
+
 
         private bool selected;
 
         private float unitSpeed;
         private string _animatorDefaultParam;
+
+        public GameObject unitStatDisplay;
+
+        public Image healthBarAmount;
+
+        public float currentHealth;
+
+        private void HandleHealth()
+        {
+            Camera camera = Camera.main;
+            unitStatDisplay.transform.LookAt(camera.transform.position);
+
+            healthBarAmount.fillAmount = currentHealth / basicUnitProperties.hp;
+
+            if (currentHealth<= 0)
+            {
+                Die();
+            }
+        }
+
+        private void Die()
+        {
+            inputManager.selectedUnits.Remove(gameObject.transform);
+            Destroy(gameObject);
+        }
 
         public void Start()
         {
@@ -30,6 +59,8 @@ namespace RTS1.Units.Player
             unitSpeed = basicUnitProperties.speed/10;
             _animatorDefaultParam = "speed";
             playerUnitState = new PlayerUnitState(PlayerUnitState.UnitState.Idle);
+
+            currentHealth = basicUnitProperties.hp;
 
         }
 
@@ -49,6 +80,8 @@ namespace RTS1.Units.Player
                 //is there an enemy within range at destination? If so attack, otherwise just stop
 
             }
+
+            HandleHealth();
         }
 
         private void Stop()
@@ -83,18 +116,9 @@ namespace RTS1.Units.Player
 
             Debug.Log(DamageTaken);
 
-            basicUnitProperties.hp -= DamageTaken;
+            currentHealth -= DamageTaken;
 
             animator.SetTrigger("Take Damage");
-
-            if (basicUnitProperties.hp <= 0)
-            {
-                // Dead();
-            }
-            else
-            {
-                //damage anim
-            }
         }
 
         public void Selected(bool isSelected)
