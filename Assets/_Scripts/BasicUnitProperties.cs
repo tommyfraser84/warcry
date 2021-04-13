@@ -18,6 +18,6 @@ namespace RTS1.Units
         public float armour;
         public float speed;
 
-
+        public float attkSpeed;
         }
     }

@@ -8,75 +8,43 @@ using RTS1.Units.Player;
 using RTS1.Layers;
 
 public class EnemyUnit : MonoBehaviour
-{
+{ 
+    private NavMeshAgent navMeshAgent;
 
-    //private PlayerUnit playerUnit;
-
-        private NavMeshAgent navMeshAgent;
-
-    public BasicUnitProperties basicUnitProperties;
+    private BasicUnitProperties basicUnitProperties;
 
     private Collider[] rangeColliders;
 
     private Transform aggroTarget;
 
+    private Unit unit;
+
+    private Unit aggroTargetUnit;
+
     private bool hasAggro = false;
 
-    private string _animatorDefaultParam;
-
-    public Animator animator;
-
-    // public GameObject.Lay aggroLayer;
+    private float attkCooldown;
 
     private float distance;
     private float unitSpeed;
 
-    public GameObject unitStatDisplay;
+    private float aggroRange;
 
-    public Image healthBarAmount;
-
-    public float currentHealth;
-
-    private void HandleHealth()
-    {
-        Camera camera = Camera.main;
-        unitStatDisplay.transform.LookAt(camera.transform.position);
-
-        healthBarAmount.fillAmount = currentHealth / basicUnitProperties.hp;
-
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-    }
-
-    private void Die()
-    {
-        Destroy(gameObject);
-    }
 
     private void Start()
     {
-        //playerUnit = GetComponent<PlayerUnit>();
-        // playerUnit.basicUnitProperties.aggroRange;
         navMeshAgent = GetComponent<NavMeshAgent>();
-        unitSpeed = basicUnitProperties.speed / 10;
 
-        currentHealth = basicUnitProperties.hp;
+        unit = GetComponent<Unit>();
 
-        _animatorDefaultParam = "speed";
+        basicUnitProperties = unit.basicUnitProperties;
+
     }
 
 
     private void Update()
     {
-
-        //Create animator speedvalue based on unit speed property
-        float animatorSpeedVal = scale(0f, unitSpeed, 0f, 1f, navMeshAgent.speed);
-
-        //Set animator with the value
-        animator.SetFloat(_animatorDefaultParam, animatorSpeedVal);
-
+        attkCooldown -= Time.deltaTime;
         if (!hasAggro)
         {
             CheckForEnemyTargets();
@@ -85,22 +53,24 @@ public class EnemyUnit : MonoBehaviour
             MoveToAggroTarget();
         }
 
-        HandleHealth();
     }
+
 
     private void CheckForEnemyTargets()
     {
         Debug.Log("CheckForEnemyTargets()");
         rangeColliders = Physics.OverlapSphere(transform.position, basicUnitProperties.aggroRange);
+        Debug.Log("aggroRange: " + aggroRange);
 
         for (int i = 0; i < rangeColliders.Length; i++)
         {
-            //Debug.Log(aggroLayer.value);
-            //Debug.Log(rangeColliders[i].gameObject.layer);
+
+            Debug.Log(rangeColliders[i].gameObject.layer);
             if (rangeColliders[i].gameObject.layer == (int) Layers.LayerName.PlayerUnit)
             {
                 Debug.Log("Layer 8!");
                 aggroTarget = rangeColliders[i].gameObject.transform;
+                aggroTargetUnit = aggroTarget.GetComponent<Unit>();
                 hasAggro = true;
                 break;
             }
@@ -118,19 +88,36 @@ public class EnemyUnit : MonoBehaviour
         {
             Debug.Log("MoveToAggroTarget()");
             distance = Vector3.Distance(aggroTarget.position, transform.position);
-            //playerUnit.navMeshAgent.stoppingDistance = (playerUnit.basicUnitProperties.attkRange + 1);
+
             navMeshAgent.stoppingDistance = basicUnitProperties.attkRange;
 
-            if (distance <= basicUnitProperties.aggroRange)
+            //check if within aggro range
+            if (distance <= basicUnitProperties.attkRange)
             {
+                Attack();
+            }
+            else if (distance <= basicUnitProperties.aggroRange)
+            {
+                //make the aggro target the target for the navmesh controller
                 Debug.Log("Within aggro range!");
                 navMeshAgent.SetDestination(aggroTarget.position);
-                //navMeshAgent.SetDestination(new Vector3(0,0,0));
-                navMeshAgent.speed = unitSpeed;
-                //Debug.Log("unitSpeed: " + unitSpeed);
+
+                navMeshAgent.speed = unit.unitSpeed;
+                Debug.Log("unitSpeed: " + unit.unitSpeed);
                 navMeshAgent.isStopped = false;
             }
         }
+    }
+
+    private void Attack()
+    {
+        Debug.Log("Attack()");
+        if(attkCooldown <= 0)
+        {
+            aggroTargetUnit.TakeDamage(basicUnitProperties.damageBasic, basicUnitProperties.damagePiercing);
+            attkCooldown = basicUnitProperties.attkSpeed;
+        }
+        
     }
 
     private void Stop()
@@ -140,30 +127,6 @@ public class EnemyUnit : MonoBehaviour
         //playerUnitState.ChangeState(PlayerUnitState.UnitState.Idle);
     }
 
-
-
-
-    void OnDrawGizmosSelected()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, basicUnitProperties.aggroRange);
-
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, basicUnitProperties.attkRange);
-    }
-
-
-    public float scale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)
-    {
-
-        float OldRange = (OldMax - OldMin);
-        float NewRange = (NewMax - NewMin);
-        float NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin;
-
-        return (NewValue);
-    }
 }
 
 

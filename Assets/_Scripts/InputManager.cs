@@ -10,6 +10,8 @@ namespace RTS1.Input
     public class InputManager : MonoBehaviour
     {
 
+        public static InputManager im;
+
         [Header("Button Settings")]
         //set variables to 
         public OVRInput.Button selectDeselectButton;

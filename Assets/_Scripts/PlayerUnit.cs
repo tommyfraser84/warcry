@@ -21,7 +21,6 @@ namespace RTS1.Units.Player
 
         public InputManager inputManager;
 
-
         private bool selected;
 
         private float unitSpeed;
@@ -49,7 +48,6 @@ namespace RTS1.Units.Player
         private void Die()
         {
             inputManager.selectedUnits.Remove(gameObject.transform);
-            Destroy(gameObject);
         }
 
         public void Start()
@@ -61,7 +59,6 @@ namespace RTS1.Units.Player
             playerUnitState = new PlayerUnitState(PlayerUnitState.UnitState.Idle);
 
             currentHealth = basicUnitProperties.hp;
-
         }
 
         public void Update()
@@ -80,7 +77,6 @@ namespace RTS1.Units.Player
                 //is there an enemy within range at destination? If so attack, otherwise just stop
 
             }
-
             HandleHealth();
         }
 
@@ -103,23 +99,8 @@ namespace RTS1.Units.Player
             navMeshAgent.isStopped = false;
             playerUnitState.ChangeState(PlayerUnitState.UnitState.Walk);
 
-
         }
 
-
-        public void TakeDamage(int DamageBasic, int DamagePiercing)
-        {
-            // (Basic Damage - Target's Armor) + Piercing Damage = Maximum damage inflicted
-            //The attacker does a random amount of damage from 50%-100% of this total each attack.
-
-            int DamageTaken = Mathf.RoundToInt(((DamageBasic - basicUnitProperties.armour) + DamagePiercing) * Random.Range(0.5f, 1));
-
-            Debug.Log(DamageTaken);
-
-            currentHealth -= DamageTaken;
-
-            animator.SetTrigger("Take Damage");
-        }
 
         public void Selected(bool isSelected)
         {
