@@ -24,6 +24,9 @@ public class Unit : MonoBehaviour
 
     private string _animatorDefaultParam;
 
+    public bool isDead;
+    public float deathCount = 20f;
+
     private void HandleHealth()
     {
         Camera camera = Camera.main;
@@ -31,10 +34,13 @@ public class Unit : MonoBehaviour
 
         healthBarAmount.fillAmount = currentHealth / basicUnitProperties.hp;
 
-        if (currentHealth <= 0)
+        if (isDead)
         {
-            Die();
+            deathCount -= Time.deltaTime;
         }
+       // if (deathCount <= 10) gameObject.GetComponent<MeshRenderer>().material.color.a = 1f;
+        if (deathCount <= 0) Destroy(gameObject);
+
     }
 
     public void TakeDamage(float DamageBasic, float DamagePiercing)
@@ -50,12 +56,27 @@ public class Unit : MonoBehaviour
 
         Debug.Log("Current Health: " + currentHealth);
 
-        animator.SetTrigger("Take Damage");
+        
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        } else
+        {
+            animator.SetTrigger("Take Damage");
+
+        }
     }
 
     private void Die()
     {
-        Destroy(gameObject);
+        
+        isDead = true;
+        Debug.Log(isDead);
+        animator.SetTrigger("Die");
+        gameObject.layer = LayerMask.NameToLayer("Dead");
+        //Destroy(gameObject);
+        unitStatDisplay.SetActive(false);
     }
 
 
@@ -65,6 +86,8 @@ public class Unit : MonoBehaviour
         unitSpeed = basicUnitProperties.speed / 10;
         navMeshAgent = GetComponent<NavMeshAgent>();
         _animatorDefaultParam = "speed";
+        isDead = false;
+       // deathCount = 20;
     }
 
     private void Update()

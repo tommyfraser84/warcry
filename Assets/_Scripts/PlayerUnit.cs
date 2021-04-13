@@ -30,25 +30,8 @@ namespace RTS1.Units.Player
 
         public Image healthBarAmount;
 
-        public float currentHealth;
+        private Unit unit;
 
-        private void HandleHealth()
-        {
-            Camera camera = Camera.main;
-            unitStatDisplay.transform.LookAt(camera.transform.position);
-
-            healthBarAmount.fillAmount = currentHealth / basicUnitProperties.hp;
-
-            if (currentHealth<= 0)
-            {
-                Die();
-            }
-        }
-
-        private void Die()
-        {
-            inputManager.selectedUnits.Remove(gameObject.transform);
-        }
 
         public void Start()
         {
@@ -57,8 +40,7 @@ namespace RTS1.Units.Player
             unitSpeed = basicUnitProperties.speed/10;
             _animatorDefaultParam = "speed";
             playerUnitState = new PlayerUnitState(PlayerUnitState.UnitState.Idle);
-
-            currentHealth = basicUnitProperties.hp;
+            unit = GetComponent<Unit>();
         }
 
         public void Update()
@@ -77,7 +59,12 @@ namespace RTS1.Units.Player
                 //is there an enemy within range at destination? If so attack, otherwise just stop
 
             }
-            HandleHealth();
+            if (unit.isDead)
+            {
+                Selected(false);
+                inputManager.selectedUnits.Remove(transform);
+            }
+  
         }
 
         private void Stop()

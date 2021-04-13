@@ -39,12 +39,15 @@ public class EnemyUnit : MonoBehaviour
 
         basicUnitProperties = unit.basicUnitProperties;
 
+        Stop();
+
     }
 
 
     private void Update()
     {
-        attkCooldown -= Time.deltaTime;
+        if (attkCooldown>0) attkCooldown -= Time.deltaTime;
+
         if (!hasAggro)
         {
             CheckForEnemyTargets();
@@ -73,18 +76,20 @@ public class EnemyUnit : MonoBehaviour
                 aggroTargetUnit = aggroTarget.GetComponent<Unit>();
                 hasAggro = true;
                 break;
+               
             }
         }
     }
 
     private void MoveToAggroTarget()
     {
-    /* */
-        if (aggroTarget == null)
+        /* */
+        if (aggroTarget == null || aggroTargetUnit.isDead)
         {
             navMeshAgent.SetDestination(transform.position);
             hasAggro = false;
-        } else
+        }
+        else
         {
             Debug.Log("MoveToAggroTarget()");
             distance = Vector3.Distance(aggroTarget.position, transform.position);
@@ -111,11 +116,13 @@ public class EnemyUnit : MonoBehaviour
 
     private void Attack()
     {
+        navMeshAgent.speed = 0f;
         Debug.Log("Attack()");
         if(attkCooldown <= 0)
         {
             aggroTargetUnit.TakeDamage(basicUnitProperties.damageBasic, basicUnitProperties.damagePiercing);
             attkCooldown = basicUnitProperties.attkSpeed;
+            unit.animator.SetTrigger("Attack");
         }
         
     }

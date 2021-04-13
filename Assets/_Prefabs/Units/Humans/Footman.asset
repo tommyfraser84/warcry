@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Footman
   m_EditorClassIdentifier: 
   Name: Footman
-  hp: 200
-  damageBasic: 0
-  damagePiercing: 0
-  aggroRange: 2
-  attkRange: 0
-  armour: 0
-  speed: 4
+  hp: 60
+  damageBasic: 6
+  damagePiercing: 3
+  aggroRange: 1.5
+  attkRange: 0.15
+  armour: 2
+  speed: 5
+  attkSpeed: 2

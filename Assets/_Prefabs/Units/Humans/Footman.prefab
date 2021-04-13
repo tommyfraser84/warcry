@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7166543481036789112}
   - component: {fileID: 5417750205183404502}
   - component: {fileID: 2441940254101074648}
+  - component: {fileID: 1197724738}
   m_Layer: 8
   m_Name: Footman
   m_TagString: Untagged
@@ -106,9 +107,29 @@ MonoBehaviour:
     type: 2}
   selectedOutline: {fileID: 7166543480210444477}
   playerUnit: {fileID: 2441940254101074648}
+  inputManager: {fileID: 0}
   unitStatDisplay: {fileID: 4554017664114241560}
   healthBarAmount: {fileID: 4554017662747630682}
+--- !u!114 &1197724738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4411905397989448607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7acadcdd0a9d3ac47920a0dd66dd5839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   currentHealth: 0
+  unitStatDisplay: {fileID: 4554017664114241560}
+  healthBarAmount: {fileID: 4554017662747630682}
+  basicUnitProperties: {fileID: 11400000, guid: 82575d2c689db804fa3efa81ee5028c7,
+    type: 2}
+  unitSpeed: 0
+  animator: {fileID: 41796139933464870}
+  isDead: 0
 --- !u!1 &4411905399028057110
 GameObject:
   m_ObjectHideFlags: 0

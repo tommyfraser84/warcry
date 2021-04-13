@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Grunt
   m_EditorClassIdentifier: 
   Name: Grunt
-  hp: 200
-  damageBasic: 20
-  damagePiercing: 0
+  hp: 60
+  damageBasic: 6
+  damagePiercing: 3
   aggroRange: 1.5
   attkRange: 0.15
   armour: 0
   speed: 5
-  attkSpeed: 1
+  attkSpeed: 2

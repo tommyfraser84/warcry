@@ -50,8 +50,8 @@ namespace RTS1.Input
 
         void Update()
         {
-           // Debug.Log(OVRInput.Get(multiSelectButton));
-
+            // Debug.Log(OVRInput.Get(multiSelectButton));
+            Debug.Log("selectUnits count: " + selectedUnits.Count);
             MoveSelector(rend);
         }
 
@@ -104,7 +104,7 @@ namespace RTS1.Input
                         if (OVRInput.GetDown(selectDeselectButton))
                         {
                           Debug.Log("12 - Units deselected!");
-                            DeselectUnits();
+                           // DeselectUnits();
 
                         } else if (OVRInput.GetDown(actionButton) & HaveSelectedUnits())
                         {
