@@ -112,9 +112,9 @@ namespace RTS1.Input
                             foreach (Transform unit in selectedUnits)
                             {
                                 //get playerunit script of selected unit in list
-                                PlayerUnit pU = unit.gameObject.GetComponent<PlayerUnit>();
+                                Unit u = unit.gameObject.GetComponent<Unit>();
                                 //trigger units moveunit function with vector3 of hit.point
-                                pU.Move(hit.point);
+                                u.MoveToLoc(hit.point);
                             }
                             //loop through units in selectedunits
                             //PlayerUnit pU = 
@@ -132,8 +132,8 @@ namespace RTS1.Input
                             {
 
                                 //get playerunit script of selected unit in list
-                                PlayerUnit pU = unit.gameObject.GetComponent<PlayerUnit>();
-                                pU.Move(hit.transform.position);
+                                Unit u = unit.gameObject.GetComponent<Unit>();
+                                u.MoveToUnit(unit.transform);
                             }
                         }
                         break;
@@ -175,10 +175,10 @@ namespace RTS1.Input
 
                 selectedUnits.Add(unit);
                 //lets set an obj on the unit called Highlight
-                Debug.Log("Selected: " + unit.gameObject.GetComponent<PlayerUnit>().CheckSelected());
-                unit.gameObject.GetComponent<PlayerUnit>().Selected(true);
+                Debug.Log("Selected: " + unit.gameObject.GetComponent<Unit>().CheckSelected());
+                unit.gameObject.GetComponent<Unit>().Selected(true);
                 //unit.
-                Debug.Log("Selected: " + unit.gameObject.GetComponent<PlayerUnit>().CheckSelected());
+                Debug.Log("Selected: " + unit.gameObject.GetComponent<Unit>().CheckSelected());
                 //unit.Find("Highlight").gameObject.SetActive(true);
         }
 
@@ -192,7 +192,7 @@ namespace RTS1.Input
                 for (int i = 0; i < selectedUnits.Count; i++)
                 {
                     //deselect units
-                    selectedUnits[i].gameObject.GetComponent<PlayerUnit>().Selected(false);
+                    selectedUnits[i].gameObject.GetComponent<Unit>().Selected(false);
                 }
                 selectedUnits.Clear();
             }
