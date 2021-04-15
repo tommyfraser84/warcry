@@ -47,7 +47,7 @@ public class Unit : MonoBehaviour
 
     public GameObject selectedOutline;
 
-    public bool isEnemyUnit;
+    public int team;
 
     private void HandleHealth()
     {
@@ -72,11 +72,11 @@ public class Unit : MonoBehaviour
 
         float DamageTaken = ((DamageBasic - basicUnitProperties.armour) + DamagePiercing) * Random.Range(0.5f, 1);
 
-        Debug.Log("Damage Taken: " + DamageTaken);
+        //Debug.Log("Damage Taken: " + DamageTaken);
 
         currentHealth -= DamageTaken;
 
-        Debug.Log("Current Health: " + currentHealth);
+        //Debug.Log("Current Health: " + currentHealth);
 
 
 
@@ -192,41 +192,43 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        //Create animator speedvalue based on unit speed property
-        float animatorSpeedVal = scale(0f, unitSpeed, 0f, 1f, navMeshAgent.speed);
-
-
-        //Set animator with the value
-        animator.SetFloat(_animatorDefaultParam, animatorSpeedVal);
-
-        //TryDamage();
-        HandleHealth();
-
-        if (attkCooldown > 0) attkCooldown -= Time.deltaTime;
-
-        if (!hasAggro)
+        if (!isDead)
         {
-            CheckForEnemyTargets();
-        }
-        else
-        {
-            MoveToAggroTarget();
-        }
+            //Create animator speedvalue based on unit speed property
+            float animatorSpeedVal = scale(0f, unitSpeed, 0f, 1f, navMeshAgent.speed);
 
 
-        float dist = Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination);
-        if (dist < navMeshAgent.stoppingDistance)
-        {
-            Stop();
-            //is there an enemy within range at destination? If so attack, otherwise just stop
+            //Set animator with the value
+            animator.SetFloat(_animatorDefaultParam, animatorSpeedVal);
 
-        }
-        if (isDead)
-        {
-            Selected(false);
-            inputManager.selectedUnits.Remove(transform);
-        }
+            //TryDamage();
+            HandleHealth();
 
+            if (attkCooldown > 0) attkCooldown -= Time.deltaTime;
+
+            if (!hasAggro)
+            {
+                CheckForEnemyTargets();
+            }
+            else
+            {
+                MoveToAggroTarget();
+            }
+
+
+            float dist = Vector3.Distance(navMeshAgent.transform.position, navMeshAgent.destination);
+            if (dist < navMeshAgent.stoppingDistance)
+            {
+                Stop();
+                //is there an enemy within range at destination? If so attack, otherwise just stop
+
+            }
+            else
+            {
+                Selected(false);
+                inputManager.selectedUnits.Remove(transform);
+            }
+        }
 
     }
 
@@ -241,17 +243,28 @@ public class Unit : MonoBehaviour
 
             Debug.Log(rangeColliders[i].gameObject.layer);
 
-            int unitCheck;
-            if (isEnemyUnit) {
-                unitCheck = (int)Layers.LayerName.EnemyUnit;
-        }
-        else {
-                unitCheck = (int)Layers.LayerName.PlayerUnit;
-        }
-
-        if (rangeColliders[i].gameObject.layer == unitCheck)
+            /*  int unitCheck;
+              if (isEnemyUnit) {
+                  unitCheck = (int)Layers.LayerName.EnemyUnit;
+          }
+          else {
+                  unitCheck = (int)Layers.LayerName.PlayerUnit;
+          }
+          */
+            int enemyLayer;
+            if (gameObject.layer == (int)Layers.LayerName.PlayerUnit)
             {
-                Debug.Log("Layer 8!");
+                enemyLayer = (int)Layers.LayerName.EnemyUnit;
+            }
+            else
+            {
+                enemyLayer = (int)Layers.LayerName.PlayerUnit;
+            }
+
+            //check if on same layer (same team)
+            if (rangeColliders[i].gameObject.layer == enemyLayer)
+            {
+                Debug.Log("Same layer");
                 aggroTarget = rangeColliders[i].gameObject.transform;
                 aggroTargetUnit = aggroTarget.GetComponent<Unit>();
                 hasAggro = true;

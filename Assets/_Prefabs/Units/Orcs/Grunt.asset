@@ -18,6 +18,6 @@ MonoBehaviour:
   damagePiercing: 3
   aggroRange: 1.5
   attkRange: 0.15
-  armour: 0
+  armour: 2
   speed: 5
   attkSpeed: 2
